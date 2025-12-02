@@ -13,7 +13,7 @@ class TaskController extends Controller
   public function index(): View
   {
 
-    $tasks = Task::latest()->get();
+    $tasks = Task::latest()->paginate(5);
 
     return view('index', [
       'tasks' => $tasks
@@ -43,7 +43,7 @@ class TaskController extends Controller
     $task = Task::create($request->validated());
 
     // return redirect()->route('tasks.show', ['id' => $task->id]);
-    return redirect()->route('tasks.show', ['task' => $task->id])->with('success', "Task {$task->title} created successfully");
+    return redirect()->route('tasks.show', ['task' => $task->id])->with('success', "Task '{$task->title}' created successfully");
   }
 
   public function edit(Task $task): View
@@ -64,9 +64,15 @@ class TaskController extends Controller
     $task->save();
 
     // return redirect()->route('tasks.show', ['id' => $task->id]);
-    return redirect()->route('tasks.show', ['task' => $task->id])->with('success', "Task {$task->title} updated successfully");
+    return redirect()->route('tasks.show', ['task' => $task->id])->with('success', "Task '{$task->title}' updated successfully");
   }
 
+  public function delete(Task $task)
+  {
+    $taskName = $task->title;
+    $task->delete();
+    return redirect()->route('tasks.index')->with('success', "Task '{$taskName}' removed successfully");
+  }
   // private function validate($request)
   // {
   //   return $request->validate([
