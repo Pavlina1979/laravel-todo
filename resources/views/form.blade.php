@@ -40,6 +40,13 @@
         <p class="error-message">{{ $message }}</p>
       @enderror
     </div>
+
+    <div class="flex items-center mb-4">
+      <input id="completed" type="checkbox" name="completed"
+        class="w-4 h-4 border border-default-medium rounded-xs bg-neutral-secondary-medium focus:ring-2 focus:ring-brand-soft"
+        @if ($task->completed === 1) checked @endif>
+      <label for="completed" class="select-none ms-2 text-sm font-medium text-heading">Completed</label>
+    </div>
     <div>
       <button type="submit">@isset($task)
         Update task

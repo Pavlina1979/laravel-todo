@@ -69,6 +69,7 @@ Route::get('/tasks/{task}', [TaskController::class, 'show'])->name('tasks.show')
 Route::post('/tasks', [TaskController::class, 'store'])->name('tasks.store');
 Route::put('/tasks/{task}', [TaskController::class, 'update'])->name('tasks.update');
 Route::delete('/tasks/{task}', [TaskController::class, 'delete'])->name('tasks.destroy');
+// Route::put('/tasks/{task}/toggle-complete', [TaskController::class, 'toggle'])->name('tasks.toggle');
 // Route::get('/tasks/{id}', function ($id) {
 
 //   $task = Task::findOrFail($id);

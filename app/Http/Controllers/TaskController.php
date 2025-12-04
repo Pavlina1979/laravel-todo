@@ -61,6 +61,7 @@ class TaskController extends Controller
     $task->title = $data['title'];
     $task->description = $data['description'];
     $task->long_description = $data['long_description'];
+    $task->completed = (isset($data['completed']) && $data['completed'] === 'on') ? 1 : 0;
     $task->save();
 
     // return redirect()->route('tasks.show', ['id' => $task->id]);
@@ -72,6 +73,13 @@ class TaskController extends Controller
     $taskName = $task->title;
     $task->delete();
     return redirect()->route('tasks.index')->with('success', "Task '{$taskName}' removed successfully");
+  }
+
+  public function toggle(Task $task)
+  {
+    $task->completed = !$task->completed;
+
+    return redirect()->back();
   }
   // private function validate($request)
   // {
