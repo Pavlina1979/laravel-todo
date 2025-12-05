@@ -3,7 +3,8 @@
 @section('title', 'Tasks list')
 
 @section('content')
-  <nav class="mb-5"><a class="text-gray-700 border-2 px-3" href="{{ route('tasks.create') }}">Add task</a>
+  <nav class="mb-5"><a class="text-gray-700 border-2 px-3 rounded-md border-2" href="{{ route('tasks.create') }}">Add
+      task</a>
   </nav>
 
   <div>

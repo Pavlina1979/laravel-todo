@@ -31,16 +31,17 @@ class TaskController extends Controller
 
   }
 
-  public function store(TaskRequest $request)
+  public function store(Request $request)
   {
-    // $request = $this->validate($request);
-    // $data = $request->validated();
-    // $task = new Task();
-    // $task->title = $data['title'];
-    // $task->description = $data['description'];
-    // $task->long_description = $data['long_description'];
-    // $task->save();
-    $task = Task::create($request->validated());
+    $data = $this->validate($request);
+    //$data = $request->validated();
+    $task = new Task();
+    $task->title = $data['title'];
+    $task->description = $data['description'];
+    $task->long_description = $data['long_description'];
+    $task->until_when = $data['until_when'];
+    $task->save();
+    // $task = Task::create($request->validated());
 
     // return redirect()->route('tasks.show', ['id' => $task->id]);
     return redirect()->route('tasks.show', ['task' => $task->id])->with('success', "Task '{$task->title}' created successfully");
@@ -53,14 +54,15 @@ class TaskController extends Controller
     ]);
   }
 
-  public function update(Task $task, TaskRequest $request)
+  public function update(Task $task, Request $request)
   {
-    // $data = $this->validate($request);
-    $data = $request->validated();
+    $data = $this->validate($request);
+    // $data = $request->validated();
     //$task = Task::findOrFail($id);
     $task->title = $data['title'];
     $task->description = $data['description'];
     $task->long_description = $data['long_description'];
+    $task->until_when = $data['until_when'];
     $task->completed = (isset($data['completed']) && $data['completed'] === 'on') ? 1 : 0;
     $task->save();
 
@@ -81,12 +83,14 @@ class TaskController extends Controller
 
     return redirect()->back();
   }
-  // private function validate($request)
-  // {
-  //   return $request->validate([
-  //     'title' => 'required|max:255',
-  //     'description' => 'required',
-  //     'long_description' => 'required',
-  //   ]);
-  // }
+  private function validate($request)
+  {
+    return $request->validate([
+      'title' => 'required|max:255',
+      'description' => 'required',
+      'long_description' => 'required',
+      'until_when' => 'required|date',
+      'completed' => 'nullable'
+    ]);
+  }
 }

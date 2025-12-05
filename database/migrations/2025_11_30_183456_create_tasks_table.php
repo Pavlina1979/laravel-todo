@@ -15,6 +15,7 @@ return new class extends Migration {
       $table->string('title');
       $table->text('description');
       $table->text('long_description')->nullable();
+      $table->date('until_when')->useCurrent();
       $table->boolean('completed')->default(false);
       $table->timestamps();
     });
